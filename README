@@ -1,0 +1,9 @@
+Ok, so this code is very simple and is just some practice with github.
+I'll be using it to do some cool stuff in the place I work, but there's nothing fancy here.
+
+* It readys input from a joystick using glut callbacks;
+* It has a joy.conf file where you can configure the buttons and it's functions;
+* The 'API' is reading an entire boolean array of the buttons;
+* Really there's nothing more.
+
+
