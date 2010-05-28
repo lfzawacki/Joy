@@ -7,7 +7,7 @@
 #define DEFAULT_JOY "joy"
 
 enum {
-		BUTTON_1,
+		BUTTON_1 = 0,
 		BUTTON_2,
 		BUTTON_3,
 		BUTTON_4,
@@ -17,11 +17,11 @@ enum {
 		BUTTON_8,
 		BUTTON_9,
 		BUTTON_10,
-		BUTTONS_TOTAL = 10
+		BUTTONS_TOTAL
 };
 
 static int buttons[BUTTONS_TOTAL] = { 1, 2, 4, 8, 16, 32, 64, 128, 256,512};
-																			
+
 static string buttonStrings[BUTTONS_TOTAL] = { "BUTTON_1","BUTTON_2","BUTTON_3",
 																							 "BUTTON_4","BUTTON_5","BUTTON_6",
 																			 				 "BUTTON_7","BUTTON_8","BUTTON_9",
@@ -33,7 +33,7 @@ enum {
 		CHIP_KICK,
 		DRIVE,
 		BRAKE,
-		
+
 		HADOUKEN,
 		SHORYUKEN,
 		MEGABUSTER,
@@ -42,12 +42,12 @@ enum {
 		ACTIONS_TOTAL
 };
 
-static string actionStrings[ACTIONS_TOTAL] = { "KICK", "PASS", "CHIP_KICK", 
+static string actionStrings[ACTIONS_TOTAL] = { "KICK", "PASS", "CHIP_KICK",
 											   "DRIVE", "BRAKE", "HADOUKEN", "SHORYUKEN", "MEGABUSTER", "Z-SABER", "JUMP"
 		 };
 
 class Joystick {
-		
+
 		public:
 			Joystick();
 			Joystick(string joyname);
@@ -60,7 +60,9 @@ class Joystick {
 			void mapButton(int action, int button);
 			void printStatus();
 			void receiveInput(int mask, int x, int y, int z);
-			
+			bool keyPressed();
+			bool axesMoved();
+
 			vector<int>  getAxes();
 			vector<bool> getButtonsPressed();
 			vector<int> getAll();
@@ -69,7 +71,7 @@ class Joystick {
 			int getY();
 			int getZ();
 			int getMask();
-			
+
 			//setters
 			void setX(int newx);
 			void setY(int newy);
@@ -78,13 +80,13 @@ class Joystick {
 		private:
 			string name;
 			int x,y,z;
-			
+
 			//cada ação está associada ao seu botão respectivo
 			int buttonMapping[ACTIONS_TOTAL];
 			//array das ações atuais;
 			bool currentActions[ACTIONS_TOTAL];
-			
-			
+
+
 			//Métodos Privados
 			//retorna o índice de uma ação dada como uma string
 			int getActionIndex(string action);
@@ -93,7 +95,7 @@ class Joystick {
 
 			void printActions();
 			void setAxes(int x, int y, int z);
-			
+
 };
 
 #endif

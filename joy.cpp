@@ -17,13 +17,13 @@ Joystick::~Joystick()
 
 bool Joystick::isConfigured()
 {
-		return fileExists(name + ".conf");			
+		return fileExists(name + ".conf");
 }
 
 void Joystick::saveConfig()
 {
 		fstream file( (name + ".conf").c_str() ,ios::out);
-		
+
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
 		{
 				file << actionStrings[i] << " = " << buttonStrings[buttonMapping[i]] << endl;
@@ -35,9 +35,9 @@ void Joystick::loadConfig()
 		string content = readTextFile(name + ".conf");
 		content = stripComments(content);
 		content = stripExtraSpaces(content);
-		
+
 		vector<string> lines = splitString(content,"\n");
-		
+
 		//FIXME sempre vem uma linha em branco no final, por isso o size - 1 ali
 		for (int i=0; i < lines.size() -1; ++i)
 		{
@@ -45,9 +45,9 @@ void Joystick::loadConfig()
 				command[0] = trimSpaces(command[0]);
 				command[1] = trimSpaces(command[1]);
 
-				mapButton(getActionIndex(command[0]), getButtonIndex(command[1]));		
+				mapButton(getActionIndex(command[0]), getButtonIndex(command[1]));
 		}
-		
+
 }
 
 void Joystick::mapButton(int action, int button)
@@ -66,15 +66,39 @@ void Joystick::printStatus()
 void Joystick::receiveInput(int mask, int x, int y, int z)
 {
 		setAxes(x,y,z);
-		
+
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
 		{
-			//testa se cada um dos botões mapeados foi apertado	
+			//testa se cada um dos botões mapeados foi apertado
 				if (buttons[buttonMapping[i]] & mask)
 					currentActions[i] = true;
 				else
 					currentActions[i] = false;
 		}
+}
+
+bool Joystick::keyPressed()
+{
+	vector<bool> keys = getButtonsPressed();
+	bool pressed = false;
+
+	for (unsigned int i=0; i < keys.size(); ++i) {
+		pressed = pressed || keys[i];
+	}
+
+	return pressed;
+}
+
+bool Joystick::axesMoved()
+{
+	vector<int> axes = getAxes();
+	bool moved = false;
+
+	for (unsigned int i=0; i < axes.size(); ++i) {
+		moved = moved || (axes[i] != 0);
+	}
+
+	return moved;
 }
 
 /*************************
@@ -91,7 +115,7 @@ vector<int> Joystick::getAxes()
 {
 		vector <int> axes(3);
 		axes[0] = x;
-		axes[1] = y; 
+		axes[1] = y;
 		axes[2] = z;
 
 		return axes;
@@ -100,12 +124,12 @@ vector<int> Joystick::getAxes()
 vector<bool> Joystick::getButtonsPressed()
 {
 		vector<bool> actionsVector(ACTIONS_TOTAL);
-		
+
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
 		{
 				actionsVector[i] = currentActions[i];
 		}
-		
+
 		return actionsVector;
 }
 
@@ -113,15 +137,15 @@ vector<int> Joystick::getAll()
 {
 	vector<int> all_the_fucking_things_of_the_joy, axes;
 	vector<bool> buttons;
-	
+
 	axes = getAxes();
 	buttons = getButtonsPressed();
-	
+
 	all_the_fucking_things_of_the_joy.insert(all_the_fucking_things_of_the_joy.begin(), axes.begin(), axes.end());
-	
+
 	for(int i = 0; i < buttons.size(); ++i)
 		all_the_fucking_things_of_the_joy.push_back((int) buttons[i] );
-	
+
 	return all_the_fucking_things_of_the_joy;
 }
 
@@ -151,9 +175,9 @@ int Joystick::getActionIndex(string action)
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
 		{
 			  if (actionStrings[i] == action)
-			  	found = i; 
+			  	found = i;
 		}
-		
+
 		return found;
 }
 
@@ -163,15 +187,14 @@ int Joystick::getButtonIndex(string button)
 		for (int i=0; i < BUTTONS_TOTAL; ++i)
 		{
 			  if (buttonStrings[i] == button)
-			  	found = i; 
+			  	found = i;
 		}
-		
+
 		return found;
 }
 
 void Joystick::printActions()
 {
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
-		  cout << actionStrings[i] << ": " << (currentActions[i] ? "Yes" : "No") << endl; 
+		  cout << actionStrings[i] << ": " << (currentActions[i] ? "Yes" : "No") << endl;
 }
-
