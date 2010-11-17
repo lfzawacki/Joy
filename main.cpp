@@ -21,7 +21,8 @@ void SetupRC(void)
 		}
 		
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-}
+}
+
 void RenderScene(void)
 {
      glutSwapBuffers();
@@ -33,7 +34,7 @@ void JoystickFunc(unsigned int mask, int x, int y, int z)
 		global_joy.receiveInput(mask,x,y,z);
 		
 		vector<int> vectorzenyo = global_joy.getAll();
-		for(int i = 0; i < vectorzenyo.size(); ++i)
+		for(unsigned int i = 0; i < vectorzenyo.size(); ++i)
 			cout << vectorzenyo[i] << " - ";
 		cout << endl;
 		global_joy.printStatus();

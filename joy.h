@@ -20,7 +20,7 @@ enum {
 		BUTTONS_TOTAL
 };
 
-static int __buttons[BUTTONS_TOTAL] = { 1, 2, 4, 8, 16, 32, 64, 128, 256,512};
+volatile static int __buttons[BUTTONS_TOTAL] = { 1, 2, 4, 8, 16, 32, 64, 128, 256,512};
 
 static string __buttonStrings[BUTTONS_TOTAL] = { "BUTTON_1","BUTTON_2","BUTTON_3",
 																							 "BUTTON_4","BUTTON_5","BUTTON_6",

@@ -66,15 +66,13 @@ string& trimSpaces( string& str)
 vector<string> splitString(string& str, string separador)
 {
     vector<string> vecStr;
-    int inicio = 0, encontrado = 0;
-    int fim = str.size();
-
+    unsigned int inicio = 0, encontrado = 0;
+    
     while(encontrado >= 0 && encontrado != string::npos) {
 
         encontrado = str.find(separador,inicio);
         vecStr.push_back(string(str.substr(inicio,encontrado - inicio)));
         inicio = encontrado+separador.size();
-
     }
 
     return vecStr;
@@ -82,7 +80,7 @@ vector<string> splitString(string& str, string separador)
 
 string& stripComments(string& conteudo, string strTok)
 {
-    int inicio = 0, fim = 0;
+    unsigned int inicio = 0, fim = 0;
 
     inicio = conteudo.find(strTok);
 
@@ -103,12 +101,12 @@ string& stripComments(string& conteudo, string strTok)
 
 string& stripExtraSpaces(string& t)
 {
-      int pos;
+      unsigned int pos;
       
-      int t_size = 3;
+      unsigned int t_size = 3;
       string tokens[] = {" ","\n","\t"};
       
-      for (int i=0; i < t_size; ++i)
+      for (unsigned int i=0; i < t_size; ++i)
       {
       	string cur_tok = tokens[i];
 				
@@ -129,7 +127,7 @@ string vectorToString(vector<string>& vec)
 {
     string ret;
 
-    for (int i=0; i < vec.size(); i++)
+    for (unsigned int i=0; i < vec.size(); i++)
     {
         ret += vec[i];
 
