@@ -11,5 +11,5 @@ all: joy
 joy: main.cpp $(OBJECTS)
 	$(CC) -o $@ $^ $(CFLAGS) $(GLUTFLAGS)
 
-*.o: %.cpp %.h
+%.o: %.cpp %.h
 	$(CC) -c -o $@ $< $(CFLAGS)

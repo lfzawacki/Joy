@@ -26,7 +26,7 @@ void Joystick::saveConfig()
 
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
 		{
-				file << actionStrings[i] << " = " << buttonStrings[buttonMapping[i]] << endl;
+				file << __actionStrings[i] << " = " << __buttonStrings[buttonMapping[i]] << endl;
 		}
 }
 
@@ -39,7 +39,7 @@ void Joystick::loadConfig()
 		vector<string> lines = splitString(content,"\n");
 
 		//FIXME sempre vem uma linha em branco no final, por isso o size - 1 ali
-		for (int i=0; i < lines.size() -1; ++i)
+		for (unsigned int i=0; i < lines.size() -1; ++i)
 		{
 				vector<string> command = splitString(lines[i], " = ");
 				command[0] = trimSpaces(command[0]);
@@ -52,7 +52,7 @@ void Joystick::loadConfig()
 
 void Joystick::mapButton(int action, int button)
 {
-		cout << "setei: " << actionStrings[action] << " para " << button << endl;
+		cout << "setei: " << __actionStrings[action] << " para " << button << endl;
 		buttonMapping[action] = button;
 }
 
@@ -70,7 +70,7 @@ void Joystick::receiveInput(int mask, int x, int y, int z)
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
 		{
 			//testa se cada um dos botões mapeados foi apertado
-				if (buttons[buttonMapping[i]] & mask)
+				if (__buttons[buttonMapping[i]] & mask)
 					currentActions[i] = true;
 				else
 					currentActions[i] = false;
@@ -143,7 +143,7 @@ vector<int> Joystick::getAll()
 
 	all_the_fucking_things_of_the_joy.insert(all_the_fucking_things_of_the_joy.begin(), axes.begin(), axes.end());
 
-	for(int i = 0; i < buttons.size(); ++i)
+	for(unsigned int i = 0; i < buttons.size(); ++i)
 		all_the_fucking_things_of_the_joy.push_back((int) buttons[i] );
 
 	return all_the_fucking_things_of_the_joy;
@@ -174,7 +174,7 @@ int Joystick::getActionIndex(string action)
 		int found = -1;
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
 		{
-			  if (actionStrings[i] == action)
+			  if (__actionStrings[i] == action)
 			  	found = i;
 		}
 
@@ -186,7 +186,7 @@ int Joystick::getButtonIndex(string button)
 		int found = -1;
 		for (int i=0; i < BUTTONS_TOTAL; ++i)
 		{
-			  if (buttonStrings[i] == button)
+			  if (__buttonStrings[i] == button)
 			  	found = i;
 		}
 
@@ -196,5 +196,5 @@ int Joystick::getButtonIndex(string button)
 void Joystick::printActions()
 {
 		for (int i=0; i < ACTIONS_TOTAL; ++i)
-		  cout << actionStrings[i] << ": " << (currentActions[i] ? "Yes" : "No") << endl;
+		  cout << __actionStrings[i] << ": " << (currentActions[i] ? "Yes" : "No") << endl;
 }
